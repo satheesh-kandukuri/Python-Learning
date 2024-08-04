@@ -1,0 +1,79 @@
+Practiced Comments, Variables, Datatypes, Type Conversions, input() Function and print() Function
+
+# name = 'Shaam_Nandan'
+# print(name)
+
+# _a = 25
+# _b = 5
+# _c = _b*_a*2.487
+# _d = int(_c)
+# print(_d)
+# print(type(_d))
+
+# age    = 45
+# points = 379.45
+# name   = 'satheesh'
+# #married = input('Are you Married: ')
+
+# print(age,complex(points),name)
+
+# a = int(input('Enter Number: ')) # b = int(input('Enter Number: ')) # c= a+b # print (c)
+
+# Name = input('Name: ')
+# age = int(input('Enter Age Here: '))
+# Married = bool(input('Married ? '))
+# print(Name,age,Married)
+
+# flt_ty = 3.45
+# _c = int(flt_ty)
+# print(type(_c))
+
+# flt_ty = 3.45
+# print((int(flt_ty)))
+
+#Task: Ask the user to input their age, then print a message saying "You are [age] years old".
+
+# age = input('Enter your age : ')
+# print('You are '+age+' years old')
+
+# _a = int(input("enter number: "))
+# _b = int(input("enter number: "))
+# print(_a+_b)
+
+# num1 = input("Enter the first number: ")
+# num2 = input("Enter the second number: ")
+# sum = int(num1) + int(num2)
+# print("The sum is:", sum)
+
+# Task: Write a small program that asks for the user's name, age, and height. Then, print a message saying "Hello [name], you are [age] years old and [height] meters tall".
+
+'''
+Name = input('Your Name: ')
+Age = int(input('Your Age: '))
+Height = float(input('Your Height: '))
+#print('Hello '+Name+','+' you are '+Age+' years old and '+Height+ ' feet tall')
+print(f"Hello {Name}, You are {Age}")
+'''    
+# Task: Write a small program to calculate simple intrest and compond intrest.
+'''
+P = int(input('Enter Princile Amount: '))
+T = int(input('Enter Time in Months: '))
+R = float(input('ROI: '))
+Final_AMT = P * T * R / 100
+print  (Final_AMT)
+ 
+P = int(input('Enter Principal Amount: '))
+T = int(input('Enter Time in Months: ')) / 12  # Converting months to years
+R = float(input('ROI: '))
+simple_interest = P * T * R / 100
+print(int(simple_interest))
+'''
+
+# Input the principal amount, annual interest rate, time in years, and number of times interest is compounded per year
+P = float(input('Enter the Principal Amount: '))
+R = float(input('Enter the Annual Interest Rate (in %): '))
+T = float(input('Enter the Time (in years): '))
+n = int(input('Enter the number of times interest is compounded per year: '))
+
+ 
+
