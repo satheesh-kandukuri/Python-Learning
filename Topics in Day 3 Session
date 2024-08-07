@@ -1,0 +1,48 @@
+Operators:
+Operators are used to perform operations on variables and values.These are kind of special symbols.
+
+Operands: The values or variables that an operator acts on are called operands.
+Operators: The symbols that represent operations are called operators.
+
+Example:
+X + Y
+Here, + is the operator.
+X and Y are operands.3
+
+Python divides the operators in the following groups:
+
+•	Arithmetic Operators
+•	Relational Operators
+•	Assignment Operators
+•	Logical Operators
+•	Identity Operators
+•	Membership Operators
+•	Bitwise Operators
+
+Discussed Operators:
+•	Arithmetic Operators
+•	Relational Operators
+•	Assignment Operators
+•	Logical Operators
+
+Control Statements: Back bone of any programming language. They allows you to control the flow of your program's execution based on specific conditions.
+
+3 Types:
+
+1. Conditional Statements or Decision Making statements
+2. Transfer Statements or Jumping Statements
+3. Iterative Statements or Looping Statements
+
+
+Conditional statements gives your program the ability to make decisions and perform different actions based on those decisions.
+We use these statements to execute certain piece of code based on wheather a condition is TRUE or FALSE.
+1. if
+2. elif
+3. else
+4. nested if
+5. shorthand if
+6. shorthand if else
+
+
+
+
