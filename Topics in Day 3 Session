@@ -43,6 +43,20 @@ We use these statements to execute certain piece of code based on wheather a con
 5. shorthand if
 6. shorthand if else
 
+Looping Statements in Python:
+1. While Loop
+2. For Loop
 
+For Loop Statements:
+# for a in 'python':
+#     if a== 'h':
+#        break
+#     else:
+#         print(a)
+
+range() function
+
+break and continue statements in the loops.
+end='' function 
 
 
