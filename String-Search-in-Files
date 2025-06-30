@@ -1,0 +1,129 @@
+import os
+import sys
+from pathlib import Path
+import gzip
+
+def search_string_in_files(directory, search_string, case_sensitive=False, file_extensions=None):
+    """
+    Search for a string in all files within a directory and its subdirectories.
+    
+    Args:
+        directory (str): Path to the directory to search
+        search_string (str): String to search for
+        case_sensitive (bool): Whether search should be case sensitive
+        file_extensions (list): List of file extensions to search (e.g., ['.txt', '.py'])
+                               If None, searches all files
+    """
+    directory = Path(directory)
+    if not directory.exists():
+        print(f"Error: Directory '{directory}' does not exist.")
+        return
+
+    matches = []
+    files_searched = 0
+
+    # Convert search string to lowercase if case insensitive
+    if not case_sensitive:
+        search_string = search_string.lower()
+
+    print(f"Searching for '{search_string}' in directory: {directory}")
+    print("-" * 60)
+
+    # Walk through all files in directory and subdirectories
+    for file_path in directory.rglob('*'):
+        if file_path.is_file():
+            # Filter by file extensions if specified
+            if file_extensions and file_path.suffix.lower() not in file_extensions:
+                continue
+
+            try:
+                files_searched += 1
+                # Check for .gz files
+                if file_path.suffix.lower() == '.gz':
+                    open_func = lambda p: gzip.open(p, 'rt', encoding='utf-8', errors='ignore')
+                else:
+                    open_func = lambda p: open(p, 'r', encoding='utf-8', errors='ignore')
+
+                with open_func(file_path) as file:
+                    line_number = 0
+                    for line in file:
+                        line_number += 1
+                        search_line = line if case_sensitive else line.lower()
+                        if search_string in search_line:
+                            matches.append({
+                                'file': str(file_path),
+                                'line_number': line_number,
+                                'line_content': line.strip()
+                            })
+                            print(f"Found in: {file_path}")
+                            print(f"  Line {line_number}: {line.strip()}")
+                            print()
+
+            except (PermissionError, UnicodeDecodeError, OSError, gzip.BadGzipFile) as e:
+                print(f"Skipped {file_path}: {e}")
+                continue
+
+    # Summary
+    print("-" * 60)
+    print(f"Search completed!")
+    print(f"Files searched: {files_searched}")
+    print(f"Total matches found: {len(matches)}")
+    print(f"Files with matches: {len(set(match['file'] for match in matches))}")
+
+    return matches
+
+def main():
+    # Example usage - modify these values as needed
+    search_directory = input("Enter directory path to search: ").strip()
+    if not search_directory:
+        search_directory = "."  # Current directory if nothing entered
+
+    search_term = input("Enter string to search for: ").strip()
+    if not search_term:
+        print("Error: Search string cannot be empty.")
+        return
+
+    # Ask for case sensitivity
+    case_sensitive = input("Case sensitive search? (y/n): ").strip().lower() == 'y'
+
+    # Ask for file extensions filter
+    extensions_input = input("File extensions to search (e.g., .txt,.py,.log) or press Enter for all: ").strip()
+    file_extensions = None
+    if extensions_input:
+        file_extensions = [ext.strip() for ext in extensions_input.split(',')]
+        # Add dots if not present
+        file_extensions = [ext if ext.startswith('.') else f'.{ext}' for ext in file_extensions]
+
+    # Perform the search
+    matches = search_string_in_files(
+        directory=search_directory,
+        search_string=search_term,
+        case_sensitive=case_sensitive,
+        file_extensions=file_extensions
+    )
+
+    # Optionally save results to file
+    save_results = input("\nSave results to file? (y/n): ").strip().lower() == 'y'
+    if save_results and matches:
+        output_file = f"search_results_{search_term.replace(' ', '_')}.txt"
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(f"Search results for '{search_term}'\n")
+            f.write(f"Directory: {search_directory}\n")
+            f.write("-" * 60 + "\n\n")
+
+            for match in matches:
+                f.write(f"File: {match['file']}\n")
+                f.write(f"Line {match['line_number']}: {match['line_content']}\n\n")
+
+        print(f"Results saved to: {output_file}")
+
+if __name__ == "__main__":
+    main()
+
+# Direct function call (alternative to interactive mode)
+# matches = search_string_in_files(
+#     directory=r"C:\Users\YourName\Documents",
+#     search_string="TODO",
+#     case_sensitive=False,
+#     file_extensions=['.py', '.txt', '.md']
+# )
