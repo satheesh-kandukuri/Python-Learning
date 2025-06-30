@@ -1,0 +1,31 @@
+import boto3
+import click
+
+@click.command()
+@click.option('--bucket', required=True, help='Name of the S3 bucket')
+@click.option('--prefix', default='', help='Prefix (folder path) in the bucket')
+@click.option('--profile', default='default', help='AWS profile name')
+@click.option('--dry-run', is_flag=True, help='Perform a dry run without making changes')
+def rename_s3_objects(bucket, prefix, profile, dry_run):
+    session = boto3.Session(profile_name=profile)
+    s3 = session.client('s3')
+
+    paginator = s3.get_paginator('list_objects_v2')
+    for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
+        for obj in page.get('Contents', []):
+            old_key = obj['Key']
+            new_key = old_key.replace(':', '-')
+
+            if new_key != old_key:
+                if dry_run:
+                    click.echo(f"Would rename: {old_key} -> {new_key}")
+                else:
+                    try:
+                        s3.copy_object(Bucket=bucket, CopySource={'Bucket': bucket, 'Key': old_key}, Key=new_key)
+                        #s3.delete_object(Bucket=bucket, Key=old_key) # Uncomment it in the script if you want to remove the original objects after renaming.
+                        click.echo(f"Renamed: {old_key} -> {new_key}")
+                    except Exception as e:
+                        click.echo(f"Error processing {old_key}: {str(e)}", err=True)
+
+if __name__ == '__main__':
+    rename_s3_objects()
