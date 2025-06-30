@@ -18,9 +18,6 @@ A Python Script to rename objects in an AWS S3 bucket by replacing colons (:) wi
 - [click](https://click.palletsprojects.com/)
 
 
- 
-
-
 **Clone the repository:**
 
 ```bash
@@ -73,3 +70,10 @@ Output:
 Would rename: logs/2024-01-01:12:30:45.log -> logs/2024-01-01-12-30-45.log
 Would rename: data/export:final.csv -> data/export-final.csv
 
+
+**### Real World use cas scenario**
+To find the GRANT Statements which was ran in ICM Redshift databases,
+Need to Analyze the logfiles, didn't have the exact date, so need to download all files from s3.
+After download i see there is 0 KB files are there.
+Then came to know in the log files there is semicolon contains `:`, due to that issue was raised..
+After renaming the files able to download the files.
