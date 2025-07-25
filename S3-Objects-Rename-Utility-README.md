@@ -71,6 +71,27 @@ Would rename: logs/2024-01-01:12:30:45.log -> logs/2024-01-01-12-30-45.log
 Would rename: data/export:final.csv -> data/export-final.csv
 ```
 
+```bash
+aws s3 cp s3://icm-pe-prd-us-east-1-audit/redshift_audit_log/AWSLogs/123456789/redshift/us-east-1/testlogs-2025/06/ . --recursive --profile ABCPRD
+```
+**Explanation:**
+
+This command uses the AWS CLI to download files from an S3 bucket.
+
+Here's a breakdown:
+aws s3 cp: AWS CLI command to copy files.
+
+- ```s3://icm-pe-prd-us-east-1-audit/.../testlogs-2025/06/```: The source path in the S3 bucket (prefix up to June 2025 logs).
+
+- ```.```: The destination directory is the current directory on your local machine.
+
+- ```--recursive```: Tells the AWS CLI to recursively copy all files and subfolders under the specified prefix.
+
+- ```--profile ABCPRD```: Uses the AWS CLI profile named ABCPRD for credentials and configuration (such as access key, region, etc.).
+
+**Result:**
+This command will download all Redshift audit log files from June 2025 under the specified S3 prefix to your current local directory using the credentials defined in the ABCPRD profile.
+
 ### Real World use case scenario
 ```bash
 
